@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8">
+            <h2><span class="color">#전체보기</span></h2><br>
+          </div>
+          <div class="col-md-4" align="right">
+            <h2><a href="http://mosaicgram-jsmichael.c9.io/main/view" class="title">메인페이지로 돌아가기</a></h2>
+          </div>
+        </div>
+        <div align="middle">
+          <% @image.shuffle.each do |g| %>
+          <a href="/main/view_tag/?titletag=<%=g.mosaicdb_id_string%>" class="title2">
+          <img src="<%= g.image.url %>">
+          </a>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

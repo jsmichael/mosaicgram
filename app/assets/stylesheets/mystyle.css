@@ -1,0 +1,51 @@
+* {
+  font-family: 'Noto Sans Korean', 'Malgun Gothic', sans-serif;
+}
+
+.space_50 {
+    height: 50px;
+}
+
+.space_25 {
+    height: 15px;
+}
+
+body {
+  background-color: #ECECEC !important;
+}
+
+.color {
+    color: #6666FF;
+}
+
+.title:hover {
+  text-decoration:none;
+  color:black;
+}
+
+.title {
+  text-decoration:none;
+  color:black;
+}
+
+.title2 {
+  text-decoration:none;
+  color:black;
+}
+
+.title2:hover {
+  text-decoration:underline;
+  color:black;
+}
+
+.username {
+    color:#000047;
+}
+
+.tag {
+    color:#1F5C1F;
+}
+
+.content {
+    color:black;
+}

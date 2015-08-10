@@ -1,0 +1,190 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-5" align="middle">
+            <h3><% @titletag_detail.each do |name| %><span class="color">#<%=name.titletag%></span>&nbsp;태그에 이미지를 추가하세요! </h3>
+          </div>
+          <div class="col-md-5" align="middle">
+            <form method="POST" action="/main/add_image" enctype="multipart/form-data">
+              <input type="file" name="image_file">
+              <input type="file" name="image_file2">
+              <input type="file" name="image_file3">
+              <input type="hidden" name="id" value="<%=name.id%>"><%end%>
+          </div>
+          <div class="col-md-2" align="middle">
+            <button type="submit" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>추가하기!
+            </button>
+          </div>
+          </form>
+        </div>
+        <div class="row">
+          <div class="col-md-12" align="right">
+          <h5>업로드가 안되는 경우 F5키로 새로고침 후 다시 올려주세요!</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h2><span class="color">
+            <% @titletag_detail.each do |name| %><span class="color">#<%=name.titletag%></h2><br>
+          </div>
+          <div class="col-md-6" align="right">
+            <h2><a href="http://mosaicgram-jsmichael.c9.io/main/view" class="title">메인페이지로 돌아가기</a></h2>
+          </div>
+        </div>
+        <div align="middle">
+          <% name.images.shuffle.each do |a| %>
+          <img src="<%= a.image_url %>">
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2><span class="color">#한마디 하기 <% @titletag_detail.each do |name| %></span></h2>
+        <% name.replies.each do |b| %>
+        <div class="row"><h4>
+          <div class="col-md-1"></div>
+          <div class="col-md-2 username"><%= b.username%></div>
+          <div class="col-md-6"><%= b.content%></div>
+          <div class="col-md-3"></div>
+        </div>
+        <%end%>
+        <div class="space_25"></div>
+        <div class="row">
+          <form method="POST" action="/main/write_reply">
+          <div class="col-md-1"></div>
+          <input class="col-md-2" type="text" name="username" placeholder="닉네임" required>&nbsp;
+          <input class="col-md-6" type="text" name="content" placeholder="하고싶은 말" required>
+          <input class="col-md-2" type="submit" value="아!!!">
+          <input type="hidden" name="id" value="<%=name.id%>"><%end%>
+          <div class="col-md-1"></div>
+          </form></h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+     
+          <h2><span class="color">이메일로 이 #태그 페이지 보내기</span></h2>
+   
+        <div class="row" align="middle">
+          <form action="/main/email_send" method="POST">
+            보내는 사람: <input type="string" name="from" placeholder="(미입력시 익명)">
+            제목: <input type="text" name="title" style="width:300px"><br>
+            받는 주소: <input type="email" name="to" placeholder="메일 받을 주소" style="width:300px">
+            참조: <input type="email" name="cc" placeholder="메일 받을 주소(참조)" style="width:300px">
+            <input type="hidden" name="titletag" value="<% @titletag_detail.each do |name| %><%=name.titletag%><%end%>">
+        </div><br>
+        <div class="row" align="middle">
+          <textarea name="content" style="height:100px; width:500px" placeholder="페이지 링크가 자동으로 보내집니다. 추가로 하고싶은 말을 적으세요."></textarea><br>
+          <input type="submit" value="아!!">
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2><span class="color">다른 #태그 보기</span></h2><h3> &nbsp;&nbsp;&nbsp;&nbsp;<%@board.shuffle.each do |p| %><a href="/main/view_tag/?titletag=<%=p.titletag%>" class="title2">#<%=p.titletag %></a>&nbsp;&nbsp;&nbsp;<%end%></h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 동일 태그 존재시 메세지 위한 Modal -->
+<div class="modal fade bs-example-modal-s" id="same" tabindex="-1" role="dialog" aria-labelledby="sameLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="sameLabel">태그 중복</h4>
+      </div>
+      <div class="modal-body" align="middle">
+        이미 해당 이름을 가진 #태그가 있습니다.<br>여기서 다시 올려주세요!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>  
+<!-- Modal end -->
+
+<!-- 메일 발송 완료시 메세지 위한 Modal -->
+<div class="modal fade bs-example-modal-s" id="sent" tabindex="-1" role="dialog" aria-labelledby="sentLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="sentLabel">전송 완료</h4>
+      </div>
+      <div class="modal-body" align="middle">
+        메일이 전송되었습니다!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>  
+<!-- Modal end -->
+
+
+<!-- modal 띄우는 script -->
+<% if params[:error] == 'same' %>
+<script type="text/javascript">
+    $(window).load(function(){
+        $('#same').modal('show');
+    });
+<% elsif params[:check] =='sent' %>
+<script type="text/javascript">
+    $(window).load(function(){
+        $('#sent').modal('show');
+    });
+</script>
+<% end %>
+<!-- script end -->

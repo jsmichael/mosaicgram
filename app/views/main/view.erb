@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-5" align="middle">
+            <h3>#태그 이름을 정하고,</h3>
+          </div>
+          <div class="col-md-5" align="middle">
+            <h3>이미지를 올려주세요.</h3>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-5" align="middle">
+            <form method="POST" action="/main/new_titletag" enctype="multipart/form-data">
+            <h3>#<input type="text", name="titletag", placeholder="모자이크태그" required></h3>
+          </div>
+          <div class="col-md-5" align="middle">
+            <input type="file" name="image_file">
+            <input type="file" name="image_file2">
+            <input type="file" name="image_file3">
+          </div>
+          <div class="col-md-2" align="middle">
+            <button type="submit" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 만들기!
+            </button>
+          </div>
+          </form>
+        </div>
+        <div class="row">
+          <div class="col-md-12" align="right">
+          <h5>업로드가 안되는 경우 F5키로 새로고침 후 다시 올려주세요!</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2><span class="color">만들어진 #태그</span></h2><h3> &nbsp;&nbsp;&nbsp;&nbsp;<%@board.shuffle.each do |p| %><a href="/main/view_tag/?titletag=<%=p.titletag%>" class="title2">#<%=p.titletag %></a>&nbsp;&nbsp;&nbsp;<%end%></h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2><span class="color">최신 #댓글 보기</h2><br>
+        <% @reply.reverse_each do |b| %>
+        <a href="/main/view_tag/?titletag=<%=b.mosaicdb_id_string%>">
+        <div class="row"><h4>
+          <div class="col-md-1"></div>
+          <div class="col-md-2 tag">#<%= b.mosaicdb_id_string%></div>
+          <div class="col-md-2 username"><%= b.username%></div>
+          <div class="col-md-6 content"><%= b.content%></div>
+          <div class="col-md-1"></div>
+        </div>
+        </a>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="space_25"></div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-md-8">
+          <h2><span class="color">#태그 #이미지 #랜덤보기</span></h2>
+        </div>
+        <div class="col-md-4" align="right">
+          <h2><span class="color"><a href="/main/view_all" class="title2">#전체보기</a></span></h2>
+        </div>
+          <%@board.sample(5).each do |p| %><br>
+          <a href="/main/view_tag/?titletag=<%=p.titletag%>" class="title2"><h2>#<%= p.titletag %></h2><br>
+          <div align="middle">
+            <% p.images.sample(8).each do |q| %>
+            <img src="<%= q.image.url %>">
+            <%end%>
+          </div></a><br>
+          <%end%>
+      </div>
+    </div>
+  </div>
+</div>
